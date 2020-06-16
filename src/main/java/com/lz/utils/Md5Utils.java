@@ -16,7 +16,6 @@ public class Md5Utils {
     public static String md5(String src){
         return DigestUtils.md5Hex(src);
     }
-
     /**
      * 第一层MD5，将输入密码转化为表单提交的密码
      * @param inputPass 用户输入的密码

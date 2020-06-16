@@ -23,10 +23,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Service
 public class UserArgumentResolver implements HandlerMethodArgumentResolver {
-
     @Autowired
     private MiaoshaUserService userService;
-
     /**
      * 判断获取参数类型
      * @param methodParameter 方法参数
@@ -37,7 +35,6 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
         Class<?> clazz = methodParameter.getParameterType();
         return clazz == MiaoshaUser.class;
     }
-
     @Override
     public Object resolveArgument(MethodParameter methodParameter, ModelAndViewContainer modelAndViewContainer,
                                   NativeWebRequest webRequest, WebDataBinderFactory webDataBinderFactory) throws Exception {

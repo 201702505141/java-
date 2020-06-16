@@ -5,13 +5,13 @@
     <!-- jquery -->
     <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
     <!-- bootstrap -->
-    <!--<link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.min.css}"/>-->
-    <!--<script type="text/javascript" th:src="@{/bootstrap/js/bootstrap.min.js}"></script>-->
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.min.css}"/>
+    <script type="text/javascript" th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
     <!-- jquery-validator -->
-    <!--<script type="text/javascript" th:src="@{/jquery-validation/jquery.validate.min.js}"></script>-->
-    <!--<script type="text/javascript" th:src="@{/jquery-validation/localization/messages_zh.min.js}"></script>-->
+    <script type="text/javascript" th:src="@{/jquery-validation/jquery.validate.min.js}"></script>
+    <script type="text/javascript" th:src="@{/jquery-validation/localization/messages_zh.min.js}"></script>
     <!-- layer -->
-    <!--<script type="text/javascript" th:src="@{/layer/layer.js}"></script>-->
+    <script type="text/javascript" th:src="@{/layer/layer.js}"></script>
     <!-- md5.js -->
     <script type="text/javascript" th:src="@{/js/md5.min.js}"></script>
     <!-- common.js -->
@@ -59,25 +59,38 @@
     </div>
 
     <div class="row" style="margin-top:40px;">
-        <div class="col-md-6">
-            <button class="btn btn-primary btn-block" type="reset" onclick="reset()">重置</button>
-        </div>
-        <div class="col-md-6">
-            <button class="btn btn-primary btn-block" id="loginSubmit" type="submit"  >登录</button>
-        </div>
-    </div>
+                <div class="col-md-6">
+                    <button class="btn btn-primary btn-block" type="reset" onclick="reset()">重置</button>
+                </div>
+                <div class="col-md-6">
+                    <button class="btn btn-primary btn-block" id="loginSubmit" type="button"  >登录</button>
+                 </div>
 
+
+    </div>
+    <div class="col-md-5">
+        <button class="btn btn-primary btn-block" type="button" id="pL">手机登录</button>
+    </div>
+    <a href="/getQQCode">获取qq登录连接</a>
+    <div th:text="${url}"></div>
+    <a th:href="${url}">开始登录</a>
 </form>
 </body>
+
+
 <script>
+
+    function mobile(){
+        alert("----->");
+//        window.location.href="/login/mobile";
+    }
+
     function doLogins() {
         var inputPass = $("#password").val();
         var mobile = $("#mobile").val();
-         alert("p:" + inputPass + "\t" + "m:" + mobile);
         g_showLoading("加载中...");
         const str = "" + g_passsword_salt.charAt(0) + g_passsword_salt.charAt(2) + inputPass + g_passsword_salt.charAt(5) + g_passsword_salt.charAt(4);
         const password = md5(str);
-        alert("p:" + password + "\t" + "m:" + mobile);
         $.ajax({
             url: "/login/doLogin",
             type: "POST",
@@ -90,14 +103,13 @@
                 console.log(data);
                  if (data.code === 0) {
                      layer.msg("登录成功");
-                      alert("登录成功！")
                      window.location.href = "/goods/toList";
                  } else {
                      layer.msg(data.msg);
                  }
             },
             error: function (data) {
-                alert("error！");
+                layer.msg("error");
                 layer.closeAll();
             }
         })
@@ -106,6 +118,9 @@
     $(document).ready(function () {
         $('#loginSubmit').click(function () {
             doLogins();
+        })
+        $('#pL').click(function () {
+            window.location.href="/login/mobile";
         })
     })
 
